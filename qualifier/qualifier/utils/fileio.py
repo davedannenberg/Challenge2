@@ -5,6 +5,8 @@ This contains a helper function for loading and saving CSV files.
 
 """
 import csv
+import questionary
+from pathlib import Path
 
 
 def load_csv(csvpath):
@@ -28,3 +30,21 @@ def load_csv(csvpath):
         for row in csvreader:
             data.append(row)
     return data
+
+# Defines function for saving csv file based on user input
+def save_csv(qualifying_loans):
+    """Saves the qualifying loans to a CSV file.
+
+    Args:
+        qualifying_loans (list of lists): The qualifying bank loans.
+    """
+    # @TODO: Complete the usability dialog for savings the CSV Files.
+    header = ["Lender","Max Loan Amount","Max LTV","Max DTI","Min Credit Score","Interest Rate"]
+    user_path = questionary.text("Enter a file path for output (.csv):").ask()
+    # output_path = Path("qualifying_loans.csv")
+    csvpath = Path(user_path)
+
+    with open(csvpath, 'w', newline='') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        csvwriter.writerow(header)
+        csvwriter.writerows(qualifying_loans)
